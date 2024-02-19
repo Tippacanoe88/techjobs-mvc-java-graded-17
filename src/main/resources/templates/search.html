@@ -1,43 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="~{fragments :: head}">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/techjobs/custom-style.css">
 </head>
 <body>
 
-<div th:replace="~{fragments :: page-header}"></div>
+<div th:replace="~{fragments :: job-table}"></div>
 
 <div class="container body-content">
 
-  <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+    <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
 
-  <form th:action="@{/search/results}" method = "post">
-    <h2>Search by:</h2>
-
-    <p>
-            <span th:each="column : ${columns}">
-                <input
-                        type="radio"
-                        name="searchType"
-                        th:id="${column.key}"
-                        th:value="${column.key}"
-                        th:checked="${column.key == 'all'}"/>
-                <label th:for="${column.key}" th:text="${column.value}"></label>
-            </span>
-
-    </p>
-
-    <p>
-      <label for="searchTerm">Keyword:</label>
-      <input type="text" name="searchTerm" id="searchTerm" />
-    </p>
-
-    <input type="submit" value="Search" />
-  </form>
-
-  <hr />
-
-  <!-- TODO #4 - Loop over the search results to display all job fields. -->
-
+    <!-- Loop to display job results in a set of tables -->
+    <th:block th:each="category : ${jobCount.keySet()}">
+        <h2 th:text="${category} + ' Jobs'"></h2>
+        <table class="job-listing">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Employer</th>
+                <th>Location</th>
+                <th>Position Type</th>
+                <th>Core Competency</th>
+            </tr>
+            <tr th:each="job : ${jobs}">
+                <td th:text="${job.ID}"></td>
+                <td th:text="${job.Name}"></td>
+                <td th:text="${job.employer}"></td>
+                <td th:text="${job.location}"></td>
+                <td th:text="${job.positionType}"></td>
+                <td th:text="${job.coreCompetency}"></td>
+            </tr>
+        </table>
+    </th:block>
 </div>
 
 </body>

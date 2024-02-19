@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
+<html xmlns:th="http://www.thymeleaf.org/" lang="java">
 
 <head th:fragment="head">
 
@@ -12,6 +12,29 @@
 </head>
 
 <body>
+
+<div th:fragment="job-table">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Employer</th>
+            <th>Location</th>
+            <th>Position Type</th>
+            <th>Core Competency</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="job : ${jobs}">
+            <td th:text="${job.name}"></td>
+            <td th:text="${job.employer != null ? job.employer.name : ''}"></td>
+            <td th:text="${job.location != null ? job.location.name : ''}"></td>
+            <td th:text="${job.positionType != null ? job.positionType.name : ''}"></td>
+            <td th:text="${job.coreCompetency != null ? job.coreCompetency.name : ''}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">

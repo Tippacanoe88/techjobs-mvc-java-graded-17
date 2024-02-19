@@ -1,36 +1,70 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="~{fragments :: head}"></head>
-
+<html xmlns:th="http://www.thymeleaf.org/" lang="java">
+<head th:replace="~{fragments :: head}">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/techjobs/custom-style.css">
+</head>
 <body>
 
 <div th:replace="~{fragments :: page-header}"></div>
 
 <div class="container body-content">
+
   <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
-  <h2 class = "centered">View Jobs By Category</h2>
-</div>
 
-<table class="centeredTable">
-  <tr>
-    <th:block th:each="column : ${columns}">
-      <th th:text = "${column.value}"></th>
-    </th:block>
-  </tr>
-  <tr>
-    <!-- TODO #2: Complete the View Jobs By Category Table. -->
+  <!-- Use a loop to display job results in a table -->
+  <table class="table job-listing" th:each = "job : ${jobs}">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Employer</th>
+            <th>Location</th>
+            <th>Position Type</th>
+            <th>Core Competency</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- Loop through each job and display its details -->
 
-    <td></td> <!-- Feel free to remove or modify this element if necessary. -->
+              <tr>
+                <td>ID</td>
+                <td> th: text="${job.ID}"</td>
+              </tr>
 
-    <td th:each="category : ${tableChoices}">
-      <ul>
-        <li th:each="item : ${category.value}">
-          <a th:href="@{/list/jobs(column=${category.key},value=${item})}" th:text="${item}"></a>
-        </li>
-      </ul>
-    </td>
-  </tr>
-</table>
+              <tr>
+                <td>Name</td>
+                <td> th: text="${job.Name}"</td>
+              </tr>
+
+              <tr>
+                <td>Employer</td>
+                <td>th:tex="${job.employer}"</td>
+              </tr>
+
+              <tr>
+                <td>Location</td>
+                <td>th:text="${job.location}"</td>
+              </tr>
+
+              <tr>
+                <td>Position Type</td>
+                <td>th:text="${job.positionType}"</td>
+              </tr>
+
+              <tr>
+                <td>Core Competency</td>
+                <td>th:text="${job.coreCompetency}"</td>
+              </tr>
+
+            <!-- Link to view all jobs -->
+            <tr>
+                <td th:href="@{/list/jobs?column=all}" th:text="View All"></td>
+            </tr>
+
+          </tbody>
+  </table>
+  </div>
 
 </body>
 </html>

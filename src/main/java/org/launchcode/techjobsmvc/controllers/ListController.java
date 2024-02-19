@@ -1,5 +1,6 @@
 package org.launchcode.techjobsmvc.controllers;
 
+//import jdk.internal.access.JavaSecurityAccess;
 import org.launchcode.techjobsmvc.models.Job;
 import org.launchcode.techjobsmvc.models.JobData;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ public class ListController {
 
     static HashMap<String, String> columnChoices = new HashMap<>();
     static HashMap<String, Object> tableChoices = new HashMap<>();
+    private Object calculateJobCounts;
 
     public ListController () {
         columnChoices.put("all", "All");
@@ -28,13 +30,14 @@ public class ListController {
         columnChoices.put("positionType", "Position Type");
         columnChoices.put("coreCompetency", "Skill");
 
+        tableChoices.put("all", JobData.findAll());
         tableChoices.put("employer", JobData.getAllEmployers());
         tableChoices.put("location", JobData.getAllLocations());
         tableChoices.put("positionType", JobData.getAllPositionTypes());
         tableChoices.put("coreCompetency", JobData.getAllCoreCompetency());
     }
 
-    @GetMapping(value = "")
+    @GetMapping(value = " ")
     public String list(Model model) {
         model.addAttribute("columns", columnChoices);
         model.addAttribute("tableChoices", tableChoices);
@@ -43,8 +46,24 @@ public class ListController {
         model.addAttribute("positions", JobData.getAllPositionTypes());
         model.addAttribute("skills", JobData.getAllCoreCompetency());
 
+
+        model.addAttribute("jobCounts", calculateJobCounts);
         return "list";
     }
+
+//    private HashMap<String, Integer> calculateJobCounts() {
+//        HashMap<String, Integer> jobCounts = new HashMap<>();
+//
+//        // Loop through each category
+//        for (String column : columnChoices.keySet()) {
+//            for (String item : ((HashMap<String, String>) tableChoices.get(column)).keySet()) {
+//                int count = JobData.findByColumnAndValue(column, item).size();
+//                jobCounts.put(item, count);
+//            }
+//        }
+//
+//        return jobCounts;
+//    }
 
     @GetMapping(value = "jobs")
     public String listJobsByColumnAndValue(Model model, @RequestParam String column, @RequestParam(required = false) String value) {
@@ -61,4 +80,5 @@ public class ListController {
         return "list-jobs";
     }
 }
+
 
