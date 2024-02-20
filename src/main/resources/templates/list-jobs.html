@@ -18,7 +18,7 @@
 <!--  <div th:each="job : ${jobs}" class="job-listing">-->
 
 
-    <table class="job-listing" th:each="job : ${jobs}">
+    <table th:each="job : ${jobs}" class="job-listing">
 
 
       <tr>
@@ -33,7 +33,7 @@
 
       <tr>
         <th>Employer</th>
-        <td th:tex="${job.employer}"></td>
+        <td th:text="${job.employer}"></td>
       </tr>
 
       <tr>
