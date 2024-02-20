@@ -42,17 +42,10 @@ public class SearchController {
 //            Search a specific column
             displaySearchResults = JobData.findByColumnAndValue(searchType, searchTerm);
         }
-
-        HashMap<String, Integer> jobCount = calculateJobCounts(displaySearchResults);
+        model.addAttribute("columns", columnChoices);
+        model.addAttribute("jobs", displaySearchResults);
 
 //        ADD SEARCH RESULTS AND COLUMNS TO THE MODEL
-        model.addAttribute("id", displaySearchResults);
-        model.addAttribute("employer", displaySearchResults);
-        model.addAttribute("location", displaySearchResults);
-        model.addAttribute("position type", displaySearchResults);
-        model.addAttribute("skill", displaySearchResults);
-        model.addAttribute("columns", ListController.columnChoices);
-        model.addAttribute("jobCount", jobCount);
 
         return "search";
     }

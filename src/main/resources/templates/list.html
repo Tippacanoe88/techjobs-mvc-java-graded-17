@@ -14,57 +14,34 @@
   <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
 
   <!-- Use a loop to display job results in a table -->
-  <table class="table job-listing" th:each = "job : ${jobs}">
-          <thead>
+  <table class="table job-listing">
+
+
           <tr>
-            <th>ID</th>
-            <th>Employer</th>
-            <th>Location</th>
-            <th>Position Type</th>
-            <th>Core Competency</th>
+              <th:block th:each= "column : ${columns}">
+                  <th th:text="${column.value}"></th>
+              </th:block>
+
           </tr>
-          </thead>
-          <tbody>
-          <!-- Loop through each job and display its details -->
 
-              <tr>
-                <td>ID</td>
-                <td> th: text="${job.ID}"</td>
-              </tr>
-
-              <tr>
-                <td>Name</td>
-                <td> th: text="${job.Name}"</td>
-              </tr>
-
-              <tr>
-                <td>Employer</td>
-                <td>th:tex="${job.employer}"</td>
-              </tr>
-
-              <tr>
-                <td>Location</td>
-                <td>th:text="${job.location}"</td>
-              </tr>
-
-              <tr>
-                <td>Position Type</td>
-                <td>th:text="${job.positionType}"</td>
-              </tr>
-
-              <tr>
-                <td>Core Competency</td>
-                <td>th:text="${job.coreCompetency}"</td>
-              </tr>
 
             <!-- Link to view all jobs -->
             <tr>
-                <td th:href="@{/list/jobs?column=all}" th:text="View All"></td>
+                <td>
+                    <li>
+                        <a th:href="@{/list/jobs?column=all}">View All</a>
+                    </li>
+                </td>
+                <td th:each= "category : ${tableChoices}">
+                    <ul>
+                        <li th:each="item : ${category.value}">
+                            <a th:href="@{/list/jobs(column=${category.key}, value=${item})}" th:text=${item}></a>
+                        </li>
+                    </ul>
+                </td>
             </tr>
 
-          </tbody>
   </table>
-  </div>
-
+</div>
 </body>
 </html>
