@@ -48,19 +48,19 @@ public class ListController {
         return "list";
     }
 
-//    private HashMap<String, Integer> calculateJobCounts() {
-//        HashMap<String, Integer> jobCounts = new HashMap<>();
-//
-//        // Loop through each category
-//        for (String column : columnChoices.keySet()) {
-//            for (String item : ((HashMap<String, String>) tableChoices.get(column)).keySet()) {
-//                int count = JobData.findByColumnAndValue(column, item).size();
-//                jobCounts.put(item, count);
-//            }
-//        }
-//
-//        return jobCounts;
-//    }
+    private HashMap<String, Integer> calculateJobCounts() {
+        HashMap<String, Integer> jobCounts = new HashMap<>();
+
+        // Loop through each category
+        for (String column : columnChoices.keySet()) {
+            for (String item : ((HashMap<String, String>) tableChoices.get(column)).keySet()) {
+                int count = JobData.findByColumnAndValue(column, item).size();
+                jobCounts.put(item, count);
+            }
+        }
+
+        return jobCounts;
+    }
 
     @GetMapping(value="jobs")
     public String listJobsByColumnAndValue(Model model, @RequestParam String column, @RequestParam(required=false) String value) {

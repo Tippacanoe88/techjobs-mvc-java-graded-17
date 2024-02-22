@@ -31,24 +31,20 @@ public class SearchController {
 //    handles the POST request when the form is submitted. Retrieves the search results using
 //    'JobData.findByColumnAndValue' and adds them to the model w/ choices
     @PostMapping(value = "results")
-    public String displaySearchResults(Model model, @RequestParam String searchType,
-                                       @RequestParam String searchTerm) {
-//        USE JobData TO GET SEARCH RESULTS
-        ArrayList<Job> displaySearchResults;
+    public String displaySearchResults(Model model,
+                                       @RequestParam("searchType") String searchType,
+                                       @RequestParam("searchTerm") String searchTerm) {
+        ArrayList<Job> jobs;
         if (searchType.equals("all") || searchTerm.isEmpty()) {
-//            Search all columns
-            displaySearchResults = JobData.findAll();
+            jobs = JobData.findAll();
         } else {
-//            Search a specific column
-            displaySearchResults = JobData.findByColumnAndValue(searchType, searchTerm);
+            jobs = JobData.findByColumnAndValue(searchType, searchTerm);
         }
-        model.addAttribute("columns", columnChoices);
-        model.addAttribute("jobs", displaySearchResults);
-
-//        ADD SEARCH RESULTS AND COLUMNS TO THE MODEL
-
+        model.addAttribute("columns", ListController.columnChoices);
+        model.addAttribute("jobs", jobs);
         return "search";
     }
+
     private HashMap<String, Integer> calculateJobCounts(ArrayList<Job> jobs) {
         HashMap<String, Integer> jobCount = new HashMap<>();
 
